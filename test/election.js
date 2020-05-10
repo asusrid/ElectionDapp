@@ -22,4 +22,19 @@ contract("Election", function(accounts){
 			assert.equal(candidate1[2], "Candidate 1", "correct candidate name");
 		});
 	});
-})
+
+	it("allows a voter to vote", function(){
+		return Election.deployed().then(function(instance){
+			electionInstance = instance;
+			candidateId = 1;
+			return electionInstance.vote(candidateId, {from:accounts[0]});
+		}).then(function(receipt){
+			return electionInstance.voters(accounts[0]);
+		}).then(function(voted){
+			assert(voted, "the voted had already voted!");
+			return electionInstance.candidates(candidateId);
+		}).then(function(candidate){
+			assert.equal(candidate[1], 1, "increments correctly the votes counts");
+		});
+	});
+});
