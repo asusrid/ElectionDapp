@@ -12,14 +12,16 @@ contract Election {
 	mapping(address => bool) public voters;
 
 	uint public candidatesCount;
+	uint public time;
 
 	event votedEvent (
 		uint indexed _candidateId
 	);
 
 	constructor() public {
-    	addCandidate("Candidate 1");
-    	addCandidate("Candidate 2");
+    	addCandidate("Biden");
+    	addCandidate("Trump");
+    	setTime(1 days);
   	} 
 
   	function addCandidate(string memory _name) private {
@@ -35,4 +37,9 @@ contract Election {
 
   		emit votedEvent(_candidateId);
   	}
+
+  	function setTime(uint _time) public {
+  		time = _time;
+  	}
+
 }

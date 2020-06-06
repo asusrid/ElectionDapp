@@ -1,8 +1,10 @@
 App = {
   web3Provider: null,
   contracts: {},
+  account: '0x0',
+  hasVoted: false,
 
-  init: async function() {
+  init: function() {
     // Load pets.
     /*$.getJSON('../pets.json', function(data) {
       var petsRow = $('#petsRow');
@@ -20,10 +22,10 @@ App = {
       }
     });*/
 
-    return await App.initWeb3();
+    return App.initWeb3();
   },
 
-  initWeb3: async function() {
+  initWeb3: function() {
     
     if(typeof web3 !== "undefined") {
       App.web3Provider = web3.currentProvider;
@@ -50,8 +52,8 @@ App = {
   listenForEvents: function(){
     App.contracts.Election.deployed().then(function(instance){
       instance.votedEvent({}, {
-        fromBlock: 0,
-        toBlock: 'latest',
+        fromBlock: 'latest',
+        toBlock: 'latest'
       }).watch(function(err, event){
         console.log("event triggered", event);
         App.render();
@@ -87,9 +89,13 @@ App = {
         $("#accountAddress").html("Your account " + account);
       }
     });
+    console.log("Llega");
 
     App.contracts.Election.deployed().then(function(instance){
       electionInstance = instance;
+      return electionInstance.time();
+    }).then(function(time){
+      App.timer(time);
       return electionInstance.candidatesCount();
     }).then(function(candidatesCount){
       var candidatesResults = $("#candidatesResults");
@@ -100,6 +106,7 @@ App = {
 
       for(var i = 1; i <= candidatesCount; i++){
         electionInstance.candidates(i).then(function(candidate){
+
           var id = candidate[0];
           var voteCounts = candidate[1];
           var name = candidate[2];
@@ -133,7 +140,29 @@ App = {
     }).catch(function(err){
       console.error(err);
     });
-  }
+  },
+
+  timer: function(duration){
+
+    var timer = duration;
+    var hourS, minuteS, secondS;
+    setInterval(function () {
+      hourS = parseInt((timer /3600)%24, 10)
+      minuteS = parseInt((timer / 60)%60, 10)
+      secondS = parseInt(timer % 60, 10);
+
+      hourS = hourS < 10 ? "0" + hourS : hourS;
+      minuteS = minuteS < 10 ? "0" + minuteS : minuteS;
+      secondS = secondS < 10 ? "0" + secondS : secondS;
+
+      time = (hourS + ":" + minuteS + ":" + secondS);
+      $("#remainingTime").html(time);
+
+      --timer;
+
+    }, 1000);
+  },
+
 };
 
 $(function() {

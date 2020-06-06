@@ -19,7 +19,7 @@ contract("Election", function(accounts){
 		}).then(function(candidate1){
 			assert.equal(candidate1[0], 1, "correct ID");
 			assert.equal(candidate1[1], 0, "correct vote count");
-			assert.equal(candidate1[2], "Candidate 1", "correct candidate name");
+			assert.equal(candidate1[2], "Biden", "correct candidate name");
 		});
 	});
 

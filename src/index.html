@@ -21,38 +21,38 @@
     <div class="container" style="width: 650px;">
       <div class="row">
         <div class="col-lg-12">
-          <h1 class="text-center">ELECTIONS DAPP</h1>
+          <h1 class="text-center">Election Results 2020 <img src="./images/us.png" width="7%" height="7%" /> </h1>
           <hr/>
           <br/>
-        </div>
-        <div id="loader">
-          <p class="text-center">Loading...</p>
-        </div>
-        <div id="content"  style="display: none">
+          <div id="loader">
+            <p class="text-center">Loading...</p>
+          </div>
+          <div id="content" style="display: none;">
 
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Name</th>
-                <th scope="col">Votes</th>
-              </tr>
-            <thead>
-            <tbody id="candidatesResults">
-            </tbody>
-          </table>
-
-          <form onSubmit="App.castVote(); return false;" role="form">
-            <div class="form-group">
-              <label for="candidatesSelect">Select Candidate</label>
-              <select class="form-control" id="candidatesSelect"></select>    
-            </div>
-            <button type="submit" class="btn btn-primary">Vote</button>
-          </form>
-
-          <hr>
-          <p class="text-center" id="accountAddress"></p>
-
+            <p id="remainingTime" class="badge badge-primary text-wrap text-right" style="font-size: 20px"></p>            
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Votes</th>
+                </tr>
+              </thead>
+              <tbody id="candidatesResults">
+              </tbody>
+            </table>
+            <hr/>
+            <form onSubmit="App.castVote(); return false;">
+              <div class="form-group">
+                <label for="candidatesSelect">Select Candidate</label>
+                <select class="form-control" id="candidatesSelect">
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary">Vote</button>
+              <hr />
+            </form>
+            <p id="accountAddress" class="text-center"></p>
+          </div>
         </div>
       </div>
     </div>
